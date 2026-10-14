@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#05080d}
+  body{font-family:'Ubuntu Sans','Ubuntu','DejaVu Sans',sans-serif;-webkit-font-smoothing:antialiased}
+
+  .cover{
+    position:relative;width:1600px;height:1200px;overflow:hidden;
+    padding:84px 88px 80px;display:flex;flex-direction:column;
+    background:
+      radial-gradient(1100px 700px at 8% -12%,rgba(76,141,255,.20),transparent 62%),
+      radial-gradient(900px 620px at 102% 8%,rgba(34,192,138,.14),transparent 60%),
+      linear-gradient(165deg,#0f1622 0%,#0a0e15 58%,#080b11 100%);
+    color:#e9eef6;
+  }
+  .cover.light{
+    background:
+      radial-gradient(1100px 700px at 8% -12%,rgba(37,99,235,.13),transparent 62%),
+      radial-gradient(900px 620px at 102% 8%,rgba(15,157,104,.10),transparent 60%),
+      linear-gradient(165deg,#ffffff 0%,#f3f6fb 58%,#eef2f8 100%);
+    color:#0e141c;
+  }
+  /* сетка на фоне */
+  .mesh{
+    position:absolute;inset:0;pointer-events:none;opacity:.5;
+    background-image:
+      linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+    background-size:80px 80px,80px 80px;
+    mask-image:linear-gradient(180deg,transparent 0%,#000 30%,#000 92%,transparent 100%);
+  }
+  .cover.light .mesh{
+    background-image:
+      linear-gradient(rgba(14,20,28,.05) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(14,20,28,.05) 1px,transparent 1px);
+  }
+
+  header{display:flex;align-items:center;justify-content:space-between;position:relative;z-index:2}
+  .kicker{
+    display:inline-flex;align-items:center;gap:14px;font-size:21px;font-weight:700;
+    letter-spacing:.16em;text-transform:uppercase;color:#8ea2bd;
+    border:1px solid rgba(76,141,255,.35);background:rgba(76,141,255,.10);
+    padding:13px 26px;border-radius:999px;
+  }
+  .cover.light .kicker{color:#3f5a7d;background:rgba(37,99,235,.08)}
+  .kicker i{width:12px;height:12px;border-radius:50%;background:#22c08a;box-shadow:0 0 0 6px rgba(34,192,138,.16)}
+  .stamp{font-family:'Ubuntu Sans Mono','DejaVu Sans Mono',monospace;font-size:20px;letter-spacing:.24em;
+    text-transform:uppercase;color:#5c6b80}
+
+  h1{
+    position:relative;z-index:2;margin-top:64px;
+    font-size:126px;line-height:1.02;font-weight:800;letter-spacing:-.028em;
+  }
+  h1 .dim{color:#93a3ba}
+  .cover.light h1 .dim{color:#5f6c7e}
+  h1 .warn{
+    background:linear-gradient(96deg,#ef555e 12%,#f0b429 92%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+
+  .sub{
+    position:relative;z-index:2;margin-top:34px;max-width:1180px;
+    font-size:31px;line-height:1.42;color:#9dabbf;font-weight:400;
+  }
+  .cover.light .sub{color:#4f5d70}
+  .sub b{color:#e9eef6;font-weight:600}
+  .cover.light .sub b{color:#0e141c}
+
+  .tags{position:relative;z-index:2;display:flex;gap:14px;margin-top:38px;flex-wrap:wrap}
+  .tags span{
+    font-size:22px;font-weight:600;padding:11px 22px;border-radius:999px;
+    border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.045);color:#c3cddc;
+  }
+  .cover.light .tags span{border-color:rgba(14,20,28,.10);background:#fff;color:#33404f}
+
+  /* ---------- график ---------- */
+  .chart{
+    position:relative;z-index:2;margin-top:auto;height:352px;border-radius:26px;
+    border:1px solid rgba(255,255,255,.10);
+    background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+    box-shadow:0 40px 80px -50px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.05);
+    overflow:hidden;
+  }
+  .cover.light .chart{background:#fff;border-color:rgba(14,20,28,.09);box-shadow:0 30px 60px -45px rgba(16,32,64,.4)}
+  .chart svg{display:block;width:100%;height:100%}
+
+  .grid-l{stroke:rgba(255,255,255,.055);stroke-width:1}
+  .cover.light .grid-l{stroke:rgba(14,20,28,.07)}
+  .res{stroke:#ef555e;stroke-width:2.4;stroke-dasharray:12 9;opacity:.85}
+  .sup{stroke:#22c08a;stroke-width:2.4;stroke-dasharray:12 9;opacity:.85}
+  .price{fill:none;stroke:#4c8dff;stroke-width:4.6;stroke-linejoin:round;stroke-linecap:round;
+    filter:drop-shadow(0 0 14px rgba(76,141,255,.45))}
+  .cover.light .price{filter:drop-shadow(0 0 12px rgba(37,99,235,.28))}
+  .axis{fill:#6b7a8f;font-family:'Ubuntu Sans Mono','DejaVu Sans Mono',monospace;font-size:19px}
+  .lvl{font-family:'Ubuntu Sans Mono',monospace;font-size:20px;font-weight:600}
+  .stop{fill:#ef555e;font-family:'Ubuntu Sans',sans-serif;font-size:19px;font-weight:700}
+  .note{fill:#8ea2bd;font-family:'Ubuntu Sans',sans-serif;font-size:19px;font-weight:600}
+
+  .flash{
+    position:absolute;display:inline-flex;align-items:center;gap:10px;
+    font-family:'Ubuntu Sans Mono','DejaVu Sans Mono',monospace;font-size:24px;font-weight:700;
+    padding:11px 20px;border-radius:14px;white-space:nowrap;
+    border:1px solid;box-shadow:0 16px 34px -18px rgba(0,0,0,.85);
+  }
+  .flash.red{color:#ff8a90;border-color:rgba(239,85,94,.50);left:11.5%;top:2%;
+    background:linear-gradient(rgba(239,85,94,.16),rgba(239,85,94,.16)),#111a27}
+  .flash.blue{color:#8fb6ff;border-color:rgba(76,141,255,.50);left:41%;top:4%;
+    background:linear-gradient(rgba(76,141,255,.16),rgba(76,141,255,.16)),#111a27}
+  .flash.green{color:#5fe0b2;border-color:rgba(34,192,138,.50);left:67%;top:55%;
+    background:linear-gradient(rgba(34,192,138,.16),rgba(34,192,138,.16)),#111a27}
+  .cover.light .flash.red{color:#c8283a;background:linear-gradient(#fdeef0,#fdeef0),#fff}
+  .cover.light .flash.blue{color:#1f56c9;background:linear-gradient(#eef3ff,#eef3ff),#fff}
+  .cover.light .flash.green{color:#0b8a5b;background:linear-gradient(#eafaf3,#eafaf3),#fff}
+</style>
+</head>
+<body>
+
+<div class="cover dark" id="cover">
+  <div class="mesh"></div>
+
+  <header>
+    <span class="kicker"><i></i>Личный разбор · трейдинг</span>
+    <span class="stamp">часть 01</span>
+  </header>
+
+  <h1>Боковик:<br><span class="dim">почему в него</span><br><span class="warn">не надо лезть</span></h1>
+
+  <p class="sub">Диапазон, психология и объём позиции —<br>плюс <b>разбор одиннадцати реальных сделок</b></p>
+
+  <div class="tags">
+    <span>11 сделок под микроскопом</span>
+    <span>стоп против рыночного шума</span>
+    <span>калькулятор объёма</span>
+  </div>
+
+  <div class="chart">
+    <svg viewBox="0 0 1424 352" preserveAspectRatio="none" aria-hidden="true">
+      <!-- сетка -->
+      <g class="grid-l">
+        <line x1="0" y1="70" x2="1424" y2="70"/>
+        <line x1="0" y1="140" x2="1424" y2="140"/>
+        <line x1="0" y1="210" x2="1424" y2="210"/>
+        <line x1="0" y1="280" x2="1424" y2="280"/>
+        <line x1="240" y1="0" x2="240" y2="352"/>
+        <line x1="480" y1="0" x2="480" y2="352"/>
+        <line x1="720" y1="0" x2="720" y2="352"/>
+        <line x1="960" y1="0" x2="960" y2="352"/>
+        <line x1="1200" y1="0" x2="1200" y2="352"/>
+      </g>
+      <!-- уровни -->
+      <line class="res" x1="0" y1="100" x2="1424" y2="100"/>
+      <line class="sup" x1="0" y1="252" x2="1424" y2="252"/>
+      <text class="lvl" x="22" y="88" fill="#ef555e">сопротивление</text>
+      <text class="lvl" x="22" y="278" fill="#22c08a">поддержка</text>
+
+      <!-- цена -->
+      <polyline class="price" points="30,215 65,180 90,222 115,170 140,120 155,108 170,150 195,195 220,222 240,235 258,60 272,150 292,200 315,230 335,242 352,278 366,215 390,170 415,120 435,108 455,150 480,195 505,228 525,240 548,198 570,150 592,110 612,100 632,145 655,192 678,225 700,240 722,196 745,148 768,110 790,100 812,148 835,198 858,230 880,240 902,195 925,148 948,110 970,98 990,120 1010,88 1030,70 1050,85 1070,50 1090,38 1110,58 1130,30 1150,48 1170,22 1190,40 1215,18 1240,35 1265,15 1290,30 1315,12 1340,25 1365,15 1394,22"/>
+
+      <!-- стопы на ложных пробоях -->
+      <circle cx="258" cy="72" r="8" fill="#ef555e"/>
+      <circle cx="352" cy="266" r="8" fill="#ef555e"/>
+      <text class="stop" x="324" y="292" text-anchor="end">стоп</text>
+
+      <!-- выход -->
+      <path d="M1012 62 L1040 100 L984 100 Z" fill="#22c08a"/>
+      <text class="note" x="1046" y="152" fill="#5fe0b2">выход из диапазона</text>
+
+    </svg>
+
+    <span class="flash red">−2,69% · −12,98 $</span>
+    <span class="flash blue">2,99% за 5 минут</span>
+    <span class="flash green">+15,88% · +62,54 $</span>
+  </div>
+</div>
+
+</body>
+</html>
