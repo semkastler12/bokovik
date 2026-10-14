@@ -55,11 +55,11 @@ echo "файлов в коммите: $(git ls-files | wc -l), размер са
 
 echo
 echo "== 4. Push =="
-CRED="$(mktemp)"; chmod 600 "$CRED"
-printf 'https://x-access-token:%s@github.com\n' "$TOKEN" > "$CRED"
-git -c credential.helper="store --file=$CRED" push -u origin main --force
-rm -f "$CRED"
-echo "запушено"
+# Пуш идёт явным URL с токеном, БЕЗ -u: иначе git запишет токен в .git/config.
+git -c credential.helper= push "https://$OWNER:${TOKEN}@github.com/$OWNER/$REPO.git" main:main --force
+git config branch.main.remote origin
+git config branch.main.merge refs/heads/main
+echo "запушено (токен в .git/config: $(grep -c 'ghp_' .git/config || true) вхождений)"
 
 echo
 echo "== 5. Включение GitHub Pages =="
