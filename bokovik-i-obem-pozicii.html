@@ -395,6 +395,51 @@ details.acc .acc-body p:last-child{margin-bottom:0}
   .facts{grid-template-columns:1fr 1fr}
 }
 
+/* ============ ЛАЙТБОКС ============ */
+.lb{
+  position:fixed;inset:0;z-index:200;padding:22px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+  background:rgba(4,7,12,.90);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s ease;
+}
+.lb.on{opacity:1;visibility:visible}
+body.lb-open{overflow:hidden}
+.lb-media{
+  display:flex;align-items:center;justify-content:center;
+  width:100%;max-width:min(1200px,100%);min-height:0;flex:0 1 auto;
+}
+.lb-media img,.lb-media svg{
+  display:block;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:#0f1520;
+  box-shadow:0 40px 90px -40px rgba(0,0,0,.9);
+}
+.lb-media img{max-width:100%;max-height:calc(100vh - 215px);width:auto;height:auto}
+.lb-media svg{width:min(1120px,100%);height:auto;max-height:calc(100vh - 215px);aspect-ratio:auto}
+.lb-bar{display:flex;align-items:center;gap:18px}
+.lb-nav{
+  width:46px;height:46px;padding:0 0 3px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:#eaeff7;
+  font-family:inherit;font-size:22px;line-height:1;display:grid;place-items:center;
+  cursor:pointer;transition:.16s;backdrop-filter:blur(6px);
+}
+.lb-nav:hover{border-color:var(--accent);color:#fff;background:rgba(76,141,255,.22)}
+.lb-count{font-family:var(--mono);font-size:13.5px;color:#94a2b6;min-width:64px;text-align:center}
+.lb-cap{font-size:14px;color:#c8d2e0;text-align:center;max-width:78ch;margin:0;line-height:1.5}
+.lb-close{
+  position:absolute;top:16px;right:16px;width:46px;height:46px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:#eaeff7;
+  font-family:inherit;font-size:17px;display:grid;place-items:center;cursor:pointer;
+  transition:.16s;backdrop-filter:blur(6px);
+}
+.lb-close:hover{border-color:var(--red);color:#ff9ba1;background:rgba(239,85,94,.18)}
+.case-shot,.figure img,.figure svg{cursor:zoom-in}
+@media (max-width:720px){
+  .lb{padding:14px 12px 18px;gap:12px}
+  .lb-media img,.lb-media svg{max-height:calc(100vh - 250px)}
+  .lb-cap{font-size:13px;max-height:4.4em;overflow:hidden}
+  .lb-close{top:10px;right:10px;width:42px;height:42px}
+}
+@media print{.lb{display:none}}
 /* ============ RESPONSIVE ============ */
 @media (max-width:1040px){
   .wrap{grid-template-columns:minmax(0,1fr);gap:0;padding-bottom:56px}
@@ -1096,7 +1141,7 @@ details.acc .acc-body p:last-child{margin-bottom:0}
       </div>
       <div class="cases">
         <article class="case">
-          <a class="case-shot" href="img/01-5m-long-lumia.jpg" target="_blank" rel="noopener" title="Открыть скрин в полном размере">
+          <a class="case-shot" href="img/01-5m-long-lumia.jpg" title="Открыть крупнее">
             <img src="img/01-5m-long-lumia.jpg" alt="Сделка 01: 5 минут LONG LUMIAUSDT, результат −2,69% · −12,98 $" loading="lazy">
           </a>
           <div class="case-body">
@@ -1115,7 +1160,7 @@ details.acc .acc-body p:last-child{margin-bottom:0}
           </div>
         </article>
         <article class="case">
-          <a class="case-shot" href="img/02-1m-long-magic.jpg" target="_blank" rel="noopener" title="Открыть скрин в полном размере">
+          <a class="case-shot" href="img/02-1m-long-magic.jpg" title="Открыть крупнее">
             <img src="img/02-1m-long-magic.jpg" alt="Сделка 02: 1 минута LONG MAGICUSDT, результат −1,36% · −7,30 $" loading="lazy">
           </a>
           <div class="case-body">
@@ -1134,7 +1179,7 @@ details.acc .acc-body p:last-child{margin-bottom:0}
           </div>
         </article>
         <article class="case">
-          <a class="case-shot" href="img/08-1m-long-jct.jpg" target="_blank" rel="noopener" title="Открыть скрин в полном размере">
+          <a class="case-shot" href="img/08-1m-long-jct.jpg" title="Открыть крупнее">
             <img src="img/08-1m-long-jct.jpg" alt="Сделка 08: 1 минута LONG JCTUSDT, результат −3,35% · −17,52 $" loading="lazy">
           </a>
           <div class="case-body">
@@ -1153,7 +1198,7 @@ details.acc .acc-body p:last-child{margin-bottom:0}
           </div>
         </article>
         <article class="case">
-          <a class="case-shot" href="img/10-5m-long-magic.jpg" target="_blank" rel="noopener" title="Открыть скрин в полном размере">
+          <a class="case-shot" href="img/10-5m-long-magic.jpg" title="Открыть крупнее">
             <img src="img/10-5m-long-magic.jpg" alt="Сделка 10: 5 минут LONG MAGICUSDT, результат −1,57% · −8,32 $" loading="lazy">
           </a>
           <div class="case-body">
@@ -1179,7 +1224,7 @@ details.acc .acc-body p:last-child{margin-bottom:0}
       </div>
       <div class="cases">
         <article class="case">
-          <a class="case-shot" href="img/04-1m-long-lumia.jpg" target="_blank" rel="noopener" title="Открыть скрин в полном размере">
+          <a class="case-shot" href="img/04-1m-long-lumia.jpg" title="Открыть крупнее">
             <img src="img/04-1m-long-lumia.jpg" alt="Сделка 04: 1 минута LONG LUMIAUSDT, результат −2,97% · −16,85 $" loading="lazy">
           </a>
           <div class="case-body">
@@ -1198,7 +1243,7 @@ details.acc .acc-body p:last-child{margin-bottom:0}
           </div>
         </article>
         <article class="case">
-          <a class="case-shot" href="img/05-5m-short-jct.jpg" target="_blank" rel="noopener" title="Открыть скрин в полном размере">
+          <a class="case-shot" href="img/05-5m-short-jct.jpg" title="Открыть крупнее">
             <img src="img/05-5m-short-jct.jpg" alt="Сделка 05: 5 минут SHORT JCTUSDT, результат −1,68% · −8,35 $" loading="lazy">
           </a>
           <div class="case-body">
@@ -1217,7 +1262,7 @@ details.acc .acc-body p:last-child{margin-bottom:0}
           </div>
         </article>
         <article class="case">
-          <a class="case-shot" href="img/06-1m-long-lumia.jpg" target="_blank" rel="noopener" title="Открыть скрин в полном размере">
+          <a class="case-shot" href="img/06-1m-long-lumia.jpg" title="Открыть крупнее">
             <img src="img/06-1m-long-lumia.jpg" alt="Сделка 06: 1 минута LONG LUMIAUSDT, результат −2,32% · −15,69 $" loading="lazy">
           </a>
           <div class="case-body">
@@ -1236,7 +1281,7 @@ details.acc .acc-body p:last-child{margin-bottom:0}
           </div>
         </article>
         <article class="case">
-          <a class="case-shot" href="img/07-5m-short-lumia.jpg" target="_blank" rel="noopener" title="Открыть скрин в полном размере">
+          <a class="case-shot" href="img/07-5m-short-lumia.jpg" title="Открыть крупнее">
             <img src="img/07-5m-short-lumia.jpg" alt="Сделка 07: 5 минут SHORT LUMIAUSDT, результат −1,93% · −7,12 $" loading="lazy">
           </a>
           <div class="case-body">
@@ -1262,7 +1307,7 @@ details.acc .acc-body p:last-child{margin-bottom:0}
       </div>
       <div class="cases">
         <article class="case">
-          <a class="case-shot" href="img/03-1m-short-lumia.jpg" target="_blank" rel="noopener" title="Открыть скрин в полном размере">
+          <a class="case-shot" href="img/03-1m-short-lumia.jpg" title="Открыть крупнее">
             <img src="img/03-1m-short-lumia.jpg" alt="Сделка 03: 1 минута SHORT LUMIAUSDT, результат +15,88% · +62,54 $" loading="lazy">
           </a>
           <div class="case-body">
@@ -1288,7 +1333,7 @@ details.acc .acc-body p:last-child{margin-bottom:0}
       </div>
       <div class="cases">
         <article class="case">
-          <a class="case-shot" href="img/09-1m-long-lumia.jpg" target="_blank" rel="noopener" title="Открыть скрин в полном размере">
+          <a class="case-shot" href="img/09-1m-long-lumia.jpg" title="Открыть крупнее">
             <img src="img/09-1m-long-lumia.jpg" alt="Сделка 09: 1 минута LONG LUMIAUSDT, результат +1,01% · +5,48 $" loading="lazy">
           </a>
           <div class="case-body">
@@ -1307,7 +1352,7 @@ details.acc .acc-body p:last-child{margin-bottom:0}
           </div>
         </article>
         <article class="case">
-          <a class="case-shot" href="img/11-15s-long-ath.jpg" target="_blank" rel="noopener" title="Открыть скрин в полном размере">
+          <a class="case-shot" href="img/11-15s-long-ath.jpg" title="Открыть крупнее">
             <img src="img/11-15s-long-ath.jpg" alt="Сделка 11: 15 секунд LONG ATHUSDT, результат +1,47% · +44,53 $" loading="lazy">
           </a>
           <div class="case-body">
@@ -1651,6 +1696,138 @@ details.acc .acc-body p:last-child{margin-bottom:0}
   boxes.forEach(function (b) { b.addEventListener('change', updChecklist); });
   updChecklist();
 
+})();
+</script>
+<script>
+/* Лайтбокс: изображения и схемы открываются поверх статьи. */
+(function () {
+  'use strict';
+
+  var items = [];
+
+  function trim(text, max) {
+    var t = String(text || '').replace(/\s+/g, ' ').trim();
+    if (t.length > max) t = t.slice(0, max - 1).replace(/[\s,.;:—–-]+$/, '') + '…';
+    return t;
+  }
+
+  document.querySelectorAll('.case').forEach(function (card) {
+    var shot = card.querySelector('.case-shot');
+    var img = shot && shot.querySelector('img');
+    if (!shot || !img) return;
+    var head = card.querySelector('.case-head h3');
+    var badge = card.querySelector('.badge');
+    items.push({
+      node: shot,
+      src: img.getAttribute('src'),
+      alt: img.getAttribute('alt') || '',
+      cap: [head && trim(head.textContent, 90), badge && trim(badge.textContent, 40)]
+        .filter(Boolean).join(' · ')
+    });
+  });
+
+  document.querySelectorAll('.figure').forEach(function (fig) {
+    var cap = trim(fig.querySelector('.figcap') && fig.querySelector('.figcap').textContent, 190);
+    var img = fig.querySelector('img');
+    var svg = fig.querySelector('svg');
+    if (img) items.push({ node: img, src: img.getAttribute('src'), alt: img.getAttribute('alt') || '', cap: cap });
+    if (svg) items.push({ node: svg, svg: svg, cap: cap });
+  });
+
+  if (!items.length) return;
+
+  var lb = document.createElement('div');
+  lb.className = 'lb';
+  lb.setAttribute('role', 'dialog');
+  lb.setAttribute('aria-modal', 'true');
+  lb.setAttribute('aria-label', 'Просмотр изображения');
+  lb.innerHTML =
+    '<button class="lb-close" type="button" aria-label="Закрыть (Esc)">✕</button>' +
+    '<div class="lb-media"></div>' +
+    '<div class="lb-bar">' +
+      '<button class="lb-nav lb-prev" type="button" aria-label="Предыдущее (←)">‹</button>' +
+      '<span class="lb-count" aria-live="polite"></span>' +
+      '<button class="lb-nav lb-next" type="button" aria-label="Следующее (→)">›</button>' +
+    '</div>' +
+    '<p class="lb-cap"></p>';
+  document.body.appendChild(lb);
+
+  var media = lb.querySelector('.lb-media');
+  var countEl = lb.querySelector('.lb-count');
+  var capEl = lb.querySelector('.lb-cap');
+  var idx = 0;
+  var lastFocus = null;
+
+  function preload(i) {
+    var it = items[(i + items.length) % items.length];
+    if (it && it.src) { var p = new Image(); p.src = it.src; }
+  }
+
+  function render(i) {
+    idx = (i + items.length) % items.length;
+    var it = items[idx];
+    media.innerHTML = '';
+    if (it.src) {
+      var im = document.createElement('img');
+      im.src = it.src;
+      im.alt = it.alt;
+      media.appendChild(im);
+      preload(idx + 1);
+      preload(idx - 1);
+    } else if (it.svg) {
+      var clone = it.svg.cloneNode(true);
+      clone.removeAttribute('style');
+      media.appendChild(clone);
+    }
+    countEl.textContent = (idx + 1) + ' / ' + items.length;
+    capEl.textContent = it.cap || '';
+    capEl.style.display = it.cap ? '' : 'none';
+  }
+
+  function open(i) {
+    lastFocus = document.activeElement;
+    render(i);
+    lb.classList.add('on');
+    document.body.classList.add('lb-open');
+    lb.querySelector('.lb-close').focus({ preventScroll: true });
+  }
+
+  function close() {
+    lb.classList.remove('on');
+    document.body.classList.remove('lb-open');
+    media.innerHTML = '';
+    if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+  }
+
+  items.forEach(function (it, i) {
+    it.node.addEventListener('click', function (e) {
+      e.preventDefault();
+      open(i);
+    });
+  });
+
+  lb.querySelector('.lb-close').addEventListener('click', close);
+  lb.querySelector('.lb-prev').addEventListener('click', function () { render(idx - 1); });
+  lb.querySelector('.lb-next').addEventListener('click', function () { render(idx + 1); });
+  lb.addEventListener('click', function (e) {
+    if (e.target === lb || e.target === media) close();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (!lb.classList.contains('on')) return;
+    if (e.key === 'Escape') { close(); }
+    else if (e.key === 'ArrowLeft') { render(idx - 1); }
+    else if (e.key === 'ArrowRight') { render(idx + 1); }
+  });
+
+  var startX = null;
+  lb.addEventListener('touchstart', function (e) { startX = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', function (e) {
+    if (startX === null) return;
+    var dx = e.changedTouches[0].clientX - startX;
+    startX = null;
+    if (Math.abs(dx) > 55) render(idx + (dx < 0 ? 1 : -1));
+  }, { passive: true });
 })();
 </script>
 </body>
